@@ -1,4 +1,6 @@
 .metadata/
-.settings/
 .recommenders/
+.settings/
+.vscode/
+*.out
 bin/
