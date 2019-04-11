@@ -2,5 +2,8 @@
 .recommenders/
 .settings/
 .vscode/
+*.exe
+*.o
 *.out
+*.x
 bin/
