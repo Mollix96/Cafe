@@ -61,13 +61,13 @@ void Matrice::prodottoScalare(double scalare)
 
 Matrice Matrice::trasposta()
 {
-    Matrice trasposta(this->colonne, this->righe);
+    Matrice trasposta(this->righe, this->colonne);
 
-    for (int i = 0; i < trasposta.righe; i++)
+    for (int i = 0; i < this->righe; i++)
     {
-        for (int j = 0; j < trasposta.colonne; j++)
+        for (int j = 0; j < this->colonne; j++)
         {
-            trasposta.elementi[i][j] = this->elementi[j][i];
+            trasposta.elementi[j][i] = this->elementi[i][j];
         }
     }
     return trasposta;
