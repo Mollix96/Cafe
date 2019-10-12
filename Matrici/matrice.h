@@ -16,7 +16,7 @@ public:
     void scrivi(int, int, elem_t);
     void stampa();
     void prodottoScalare(double);
-    Matrice trasposta();
+    Matrice *trasposta();
 
 private:
     int righe;   // Numero righe

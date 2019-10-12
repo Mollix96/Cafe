@@ -59,15 +59,15 @@ void Matrice::prodottoScalare(double scalare)
     }
 }
 
-Matrice Matrice::trasposta()
+Matrice *Matrice::trasposta()
 {
-    Matrice trasposta(this->righe, this->colonne);
+    Matrice *trasposta = new Matrice(this->righe, this->colonne);
 
     for (int i = 0; i < this->righe; i++)
     {
         for (int j = 0; j < this->colonne; j++)
         {
-            trasposta.elementi[j][i] = this->elementi[i][j];
+            trasposta->elementi[j][i] = this->elementi[i][j];
         }
     }
     return trasposta;
