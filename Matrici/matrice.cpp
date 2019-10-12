@@ -76,7 +76,7 @@ Matrice *Matrice::trasposta()
 // Decostruttore
 Matrice::~Matrice()
 {
-    for (int i = this->righe; i > 0; i--)
+    for (int i = 0; i < this->righe; i++)
     {
         if (this->elementi[i] != NULL)
         {
