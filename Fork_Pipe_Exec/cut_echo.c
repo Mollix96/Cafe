@@ -43,10 +43,10 @@ int main(void)
         if (pid == 0)
         {
             /* Nipote */
-            close(0);
+            close(STDIN_FILENO);
             dup(n1p1[0]);
-            close(n1p1[0]);
-            close(n1p1[1]);
+            close(n1p1[0]); // Chiude l'input della pipe
+            close(n1p1[1]); // Chiude l'output della pipe
 
             /* SECONDO comando */
             execlp("cut", "cut", "-f", "1", "-d", ",", NULL);
@@ -56,10 +56,10 @@ int main(void)
         else
         {
             /* Figlio */
-            close(1);
+            close(STDOUT_FILENO);
             dup(n1p1[1]);
-            close(n1p1[0]);
-            close(n1p1[1]);
+            close(n1p1[0]); // Chiude l'input della pipe
+            close(n1p1[1]); // Chiude l'output della pipe
 
             /* PRIMO comando */
             execlp("echo", "echo", "Hello, World!", NULL);
