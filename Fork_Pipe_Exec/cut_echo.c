@@ -33,7 +33,7 @@ int main(void)
     else if (pid == 0)
     {
         /* Figlio */
-        pipe(n1p1);
+        pipe(n1p1); // Inizializzando qui la pipe non dovra' chiuderla il processo genitore
         pid = fork();
         if (pid < 0)
         {
@@ -43,10 +43,10 @@ int main(void)
         if (pid == 0)
         {
             /* Nipote */
-            close(STDIN_FILENO);
-            dup(n1p1[0]);
-            close(n1p1[0]); // Chiude l'input della pipe
-            close(n1p1[1]); // Chiude l'output della pipe
+            close(STDIN_FILENO);        // Deve ricevere l'input dalla pipe, non da stdin
+            dup(n1p1[STDIN_FILENO]);    // Collega stdin alla pipe
+            close(n1p1[STDIN_FILENO]);  // Chiude l'input della pipe: gia' collegato a stdin
+            close(n1p1[STDOUT_FILENO]); // Chiude l'output della pipe: deve usare stdout
 
             /* SECONDO comando */
             execlp("cut", "cut", "-f", "1", "-d", ",", NULL);
@@ -56,10 +56,10 @@ int main(void)
         else
         {
             /* Figlio */
-            close(STDOUT_FILENO);
-            dup(n1p1[1]);
-            close(n1p1[0]); // Chiude l'input della pipe
-            close(n1p1[1]); // Chiude l'output della pipe
+            close(STDOUT_FILENO);       // Deve mandare l'output sulla pipe, non a stdout
+            dup(n1p1[STDOUT_FILENO]);   // Collega stdout alla pipe
+            close(n1p1[STDIN_FILENO]);  // Chiude l'input della pipe: deve usare stdin
+            close(n1p1[STDOUT_FILENO]); // Chiude l'output della pipe: gia' collegato a stdin
 
             /* PRIMO comando */
             execlp("echo", "echo", "Hello, World!", NULL);
@@ -71,6 +71,9 @@ int main(void)
     else
     {
         /* Genitore */
+
+        /* NOTA: pipe gia' chiusa */
+
         wait(&status);
     }
 }
